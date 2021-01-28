@@ -1,9 +1,11 @@
 class SpotifyController < ApplicationController
-  def callback
-    r = request.env["omniauth.auth"]
-    spotify_user = RSpotify::User.new(request.env["omniauth.auth"])
-    # Now you can access user's private data, create playlists and much more
+  before_action :authenticate
+  protect_from_forgery with: :null_session
 
-    render json: { response: "success" }
+  def top_tracks
+    spotify_user = RSpotify::User.find("rommelmonsayac")
+
+    render json: spotify_user
   end
+
 end

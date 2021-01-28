@@ -54,3 +54,4 @@ gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "rspotify"
 gem "rufo"
 gem "figaro"
+gem 'jwt'
