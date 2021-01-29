@@ -17,18 +17,16 @@ class SpotifyController < ApplicationController
     render json: @spotify_user.top_tracks(input_hash)
   end
 
+  def create_playlist
+    puts params["spotify"]
+
+    @spotify_user.create_playlist!("test aasdad", description: "description")
+    render json: params
+  end
+
   def get_user_info
     user_info = { name: @spotify_user.display_name, email: @spotify_user.email, spotify_id: @current_user.spotify_id }
     render json: user_info
-  end
-
-  def get_lf_top_tracks
-    url = "https://ws.audioscrobbler.com/2.0/?method=user.gettoptracks&user=elitheiceman163&api_key=#{ENV["lf_api_key"]}&format=json"
-    uri = URI(url)
-    response = Net::HTTP.get(uri)
-    JSON.parse(response)
-
-    render json: JSON.parse(response)
   end
 
   private
