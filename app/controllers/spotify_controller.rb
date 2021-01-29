@@ -3,9 +3,8 @@ class SpotifyController < ApplicationController
   protect_from_forgery with: :null_session
 
   def top_tracks
-    spotify_user = RSpotify::User.find("rommelmonsayac")
+    spotify_user = RSpotify::User.find(@current_user.spotify_id)
 
-    render json: spotify_user
+    render json: spotify_user.top_tracks()
   end
-
 end

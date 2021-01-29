@@ -20,5 +20,15 @@ module LfToSfPlaylistBackend
     # config.eager_load_paths << Rails.root.join("extras")
 
     RSpotify::authenticate(ENV["spotify_client_id"], ENV["spotify_client_secret"])
+
+    config.middleware.use Rack::Cors do
+      allow do
+        origins "*"
+        resource "*",
+                 headers: :any,
+                 expose: %w(access-token expiry token-type uid client),
+                 methods: %i(get post options put delete)
+      end
+    end
   end
 end

@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  
   def logged_in?
     !!current_user
   end
@@ -8,17 +7,18 @@ class ApplicationController < ActionController::Base
     return @current_user if @current_user
     if auth_present?
       uid = Auth.decode_uid(read_token_from_request)
-      @current_user = User.find_by({spotify_id: uid})
+      @current_user = User.find_by({ spotify_id: uid })
       return @current_user if @current_user
     end
   end
 
   def authenticate
-    render json: {error: "unauthorized"}, 
-                 status: 401 unless logged_in?
+    render json: { error: "unauthorized" },
+           status: 401 unless logged_in?
   end
 
-private
+  private
+
   def read_token_from_request
     token = request.env["HTTP_AUTHORIZATION"]
                    .scan(/Bearer (.*)$/).flatten.last
@@ -28,5 +28,4 @@ private
     !!request.env.fetch("HTTP_AUTHORIZATION", "")
              .scan(/Bearer/).flatten.first
   end
-
 end
