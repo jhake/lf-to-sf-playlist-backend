@@ -4,4 +4,6 @@ Rails.application.routes.draw do
   get "/top_tracks", to: "spotify#get_top_tracks"
   post "/top_tracks", to: "spotify#get_top_tracks"
   get "/lf_top_tracks", to: "spotify#get_lf_top_tracks"
+
+  delete "/logout", to: "sessions#logout"
 end

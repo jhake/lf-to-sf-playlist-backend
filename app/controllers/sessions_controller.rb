@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  protect_from_forgery with: :null_session
 
   def callback
 
@@ -15,6 +16,12 @@ class SessionsController < ApplicationController
 
   end
 
+  def logout
+    delete_token
+    render json: "Logout successful"
+  end
+
+  private
   def auth
     request.env['omniauth.auth']
   end

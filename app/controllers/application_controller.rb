@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  
   def logged_in?
     !!current_user
   end
@@ -15,6 +16,10 @@ class ApplicationController < ActionController::Base
   def authenticate
     render json: { error: "unauthorized" },
            status: 401 unless logged_in?
+  end
+  
+  def delete_token
+    Auth.delete_token(read_token_from_request)
   end
 
   private
