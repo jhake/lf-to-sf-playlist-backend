@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
   protect_from_forgery with: :null_session
 
+
   def callback
 
     spotify_user = RSpotify::User.new(auth)
@@ -8,7 +9,8 @@ class SessionsController < ApplicationController
 
     if user
       jwt = Auth.encode_uid(user.spotify_id)
-      redirect_to(ENV['client_url'] + "login?token=#{jwt}")
+      cookies[:token] = { value: jwt, httponly: true }
+      redirect_to(ENV['client_url'] + "login")
     else
       redirect_to(ENV['client_url'])
     end
