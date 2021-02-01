@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   get "/lf_get_request", to: "lastfm#get_request"
 
   post "/create_playlist", to: "spotify#create_playlist"
+
+  delete "/logout", to: "sessions#logout"
 end
