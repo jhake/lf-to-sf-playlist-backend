@@ -8,5 +8,4 @@ class LastfmController < ApplicationController
     response = Lf.get_request(params.except("controller", "action"))
     render json: response
   end
-  
 end
