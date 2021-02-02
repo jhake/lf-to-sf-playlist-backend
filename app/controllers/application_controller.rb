@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
   def authenticate
     render json: { error: "unauthorized" },
            status: 401 unless logged_in?
+
   end
   
   def delete_token
@@ -25,12 +26,10 @@ class ApplicationController < ActionController::Base
   private
 
   def read_token_from_request
-    token = request.env["HTTP_AUTHORIZATION"]
-                   .scan(/Bearer (.*)$/).flatten.last
+    token = request.cookies["token"]
   end
 
   def auth_present?
-    !!request.env.fetch("HTTP_AUTHORIZATION", "")
-             .scan(/Bearer/).flatten.first
+    !!request.cookies["token"]
   end
 end

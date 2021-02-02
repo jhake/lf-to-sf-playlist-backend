@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   protect_from_forgery with: :null_session
-
+  before_action :authenticate, only: :logout
 
   def callback
 
@@ -9,18 +9,15 @@ class SessionsController < ApplicationController
 
     if user
       jwt = Auth.encode_uid(user.spotify_id)
-      cookies[:token] = { value: jwt, httponly: true }
-      redirect_to(ENV['client_url'] + "login")
-    else
-      redirect_to(ENV['client_url'])
+      cookies[:token] = { value: jwt}
     end
-
+    
+    redirect_to(ENV['client_url'])
 
   end
 
   def logout
-    delete_token
-    render json: "Logout successful"
+    render json: "Logout successful" if delete_token
   end
 
   private
