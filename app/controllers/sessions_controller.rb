@@ -9,10 +9,10 @@ class SessionsController < ApplicationController
 
     if user
       jwt = Auth.encode_uid(user.spotify_id)
-      cookies[:token] = { value: jwt}
+      redirect_to(ENV['client_url'] + "/login?token=#{jwt}")
+    else
+      redirect_to(ENV['client_url'])
     end
-    
-    redirect_to(ENV['client_url'])
 
   end
 
