@@ -26,10 +26,12 @@ class ApplicationController < ActionController::Base
   private
 
   def read_token_from_request
-    token = request.cookies["token"]
+    token = request.env["HTTP_AUTHORIZATION"]
+                   .scan(/Bearer (.*)$/).flatten.last	
   end
 
   def auth_present?
-    !!request.cookies["token"]
+    !!request.env.fetch("HTTP_AUTHORIZATION", "")
+             .scan(/Bearer/).flatten.first	
   end
 end
