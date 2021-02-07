@@ -34,4 +34,8 @@ class ApplicationController < ActionController::Base
     !!request.env.fetch("HTTP_AUTHORIZATION", "")
              .scan(/Bearer/).flatten.first	
   end
+
+  def get_spotify_user
+    @spotify_user = RSpotify::User.find(@current_user.spotify_id)
+  end
 end
