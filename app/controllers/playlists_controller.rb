@@ -53,4 +53,12 @@ class PlaylistsController < ApplicationController
 
   end
 
+  def get_spotify_playlists
+
+    playlists =  @spotify_user.playlists(limit: 50)
+    playlist_entries = @current_user.playlists
+
+    render  json: {playlists: playlists, playlist_entries: playlist_entries}
+
+  end
 end
