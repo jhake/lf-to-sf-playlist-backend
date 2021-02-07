@@ -55,6 +55,12 @@ class SpotifyController < ApplicationController
     end
   end
 
+  def play_context
+    player =  @spotify_user.player
+    response = player.play_context(nil, params["uri"])
+    render json: response
+  end
+  
   def get_user_info
     # byebug
     user_info = { name: @spotify_user.display_name, email: @spotify_user.email, spotify_id: @current_user.spotify_id, profile_image: @spotify_user.images[0]["url"] }
