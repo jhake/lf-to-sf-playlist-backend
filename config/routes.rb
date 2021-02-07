@@ -6,7 +6,10 @@ Rails.application.routes.draw do
   get "/lf_get_request", to: "lastfm#get_request"
   get "/get_user_info", to: "spotify#get_user_info"
 
-  post "/create_playlist", to: "spotify#create_playlist"
+  post "/create_playlist", to: "playlists#create_playlist"
+  get "/playlists", to: "playlists#get_playlists"
+  get "/playlists/:id", to: "playlists#get_playlist"
+
 
   delete "/logout", to: "sessions#logout"
 end

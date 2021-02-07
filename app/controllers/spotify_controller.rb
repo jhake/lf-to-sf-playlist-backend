@@ -17,35 +17,6 @@ class SpotifyController < ApplicationController
     render json: @spotify_user.top_tracks(input_hash)
   end
 
-  def create_playlist
-    puts params["spotify"]
-    errors = []
-
-    if !params["spotify"]["name"]
-      errors.append("name is required")
-    elsif params["spotify"]["name"].class.name != "String"
-      errors.append("name should be a string")
-    end
-
-    if !params["spotify"]["tracks"]
-      errors.append("tracks is required")
-    elsif params["spotify"]["tracks"].class.name != "Array"
-      errors.append("tracks should be an array")
-    end
-
-    if errors.length > 0
-      render json: errors, status: 400
-    else
-      begin
-        playlist = @spotify_user.create_playlist!(params["spotify"]["name"])
-        tracks = playlist.add_tracks!(params["spotify"]["tracks"])
-        render json: tracks
-      rescue
-        render json: { error: "some error occured while creating the playlist" }, status: 500
-      end
-    end
-  end
-
   def search_spotify_tracks
     puts params
     errors = []
@@ -91,7 +62,4 @@ class SpotifyController < ApplicationController
 
   private
 
-  def get_spotify_user
-    @spotify_user = RSpotify::User.find(@current_user.spotify_id)
-  end
 end
