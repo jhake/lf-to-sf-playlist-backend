@@ -56,7 +56,8 @@ class SpotifyController < ApplicationController
   end
 
   def get_user_info
-    user_info = { name: @spotify_user.display_name, email: @spotify_user.email, spotify_id: @current_user.spotify_id }
+    # byebug
+    user_info = { name: @spotify_user.display_name, email: @spotify_user.email, spotify_id: @current_user.spotify_id, profile_image: @spotify_user.images[0]["url"] }
     render json: user_info
   end
 
