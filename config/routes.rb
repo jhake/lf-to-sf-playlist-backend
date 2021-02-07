@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get "/top_tracks", to: "spotify#get_top_tracks"
   get "/search_spotify_tracks", to: "spotify#search_spotify_tracks"
   get "/lf_get_request", to: "lastfm#get_request"
+  get "/get_user_info", to: "spotify#get_user_info"
 
   post "/create_playlist", to: "spotify#create_playlist"
 
