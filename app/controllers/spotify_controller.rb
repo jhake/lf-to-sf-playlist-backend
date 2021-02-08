@@ -62,7 +62,7 @@ class SpotifyController < ApplicationController
     if devices.length == 0 || !player
       render json: "No active device", status: 418
     else
-      player.play_context(devices, params["uri"])
+      player.play_context(nil, params["uri"])
       render json: player
     end
   end
