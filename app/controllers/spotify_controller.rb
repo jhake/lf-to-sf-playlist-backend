@@ -57,8 +57,14 @@ class SpotifyController < ApplicationController
 
   def play_context
     player =  @spotify_user.player
-    response = player.play_context(nil, params["uri"])
-    render json: response
+    devices =  @spotify_user.devices
+
+    if devices.length == 0 || !player
+      render json: "No active device", status: 418
+    else
+      player.play_context(devices, params["uri"])
+      render json: player
+    end
   end
   
   def get_user_info
