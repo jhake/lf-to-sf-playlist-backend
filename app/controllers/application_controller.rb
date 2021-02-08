@@ -7,8 +7,8 @@ class ApplicationController < ActionController::Base
   def current_user
     return @current_user if @current_user
     if auth_present?
-      uid = Auth.decode_uid(read_token_from_request)
-      @current_user = User.find_by({ spotify_id: uid })
+      user_id, access_token_id = Auth.decode_token(read_token_from_request)
+      @current_user = Session.get_user_session(user_id, access_token_id)
       return @current_user if @current_user
     end
   end
@@ -20,7 +20,8 @@ class ApplicationController < ActionController::Base
   end
   
   def delete_token
-    Auth.delete_token(read_token_from_request)
+    _ , access_token_id = Auth.decode_token(read_token_from_request)
+    Session.delete_session_token(access_token_id)
   end
 
   private
@@ -38,4 +39,5 @@ class ApplicationController < ActionController::Base
   def get_spotify_user
     @spotify_user = RSpotify::User.find(@current_user.spotify_id)
   end
+
 end
