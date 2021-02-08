@@ -26,5 +26,4 @@ class Session
     access_token.destroy unless access_token.nil?
   end
 
-  
 end
