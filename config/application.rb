@@ -23,7 +23,7 @@ module LfToSfPlaylistBackend
 
     config.middleware.use Rack::Cors do
       allow do
-        origins "*"
+        origins ENV["client_url"]
         resource "*",
                  headers: :any,
                  expose: %w(access-token expiry token-type uid client),
